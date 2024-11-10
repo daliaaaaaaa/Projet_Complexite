@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "abr.h"
 typedef struct Noeud {
     int cle;
     struct Noeud* fg;  // fils gauche
@@ -168,33 +168,7 @@ Noeud* recherche(Noeud* racine, int x) {
     }
     return NULL;  // Si l'élément n'est pas trouvé, retourner NULL
 }
-void parcour_infixe(Noeud* racine){
-    if(racine!=NULL){
-        parcour_infixe(racine->fg);
-        printf("%d ",racine->cle);
-        parcour_infixe(racine->fd);
-    }
-}
 
 
 
-int main() {
-    Noeud * racine=NULL;
-    insertion(&racine,10);
-    insertion(&racine,5);
-    insertion(&racine,15);
-    insertion(&racine,3);
-    insertion(&racine,7);
-    insertion(&racine,18);
-    printf("done with all\n");
-    parcour_infixe(racine);
-    printf("\n");
-    Noeud *r=recherche(racine,15);
-    if (r!=NULL) printf("15 existe dans l'arbre\n");
-    else printf("15 n'existe pas\n");
-    Suppression(5,&racine);
-    parcour_infixe(racine);
 
-
-    return 0;
-}
