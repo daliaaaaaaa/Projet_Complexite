@@ -168,6 +168,53 @@ Noeud* recherche(Noeud* racine, int x) {
     }
     return NULL;  // Si l'élément n'est pas trouvé, retourner NULL
 }
+void menu_abr(Noeud** racine) {
+    int choix, valeur;
+    Noeud* resultat;
+    do {
+        printf("\n--- Menu de traitement de l'arbre binaire de recherche ---\n");
+        printf("1. Insertion\n");
+        printf("2. Suppression\n");
+        printf("3. Recherche\n");
+        printf("4. Quitter\n");
+        printf("Choisissez une option : ");
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1:
+                printf("Entrez la valeur à insérer : ");
+                scanf("%d", &valeur);
+                insertion(racine, valeur);
+                printf("Valeur %d insérée dans l'arbre.\n", valeur);
+                break;
+
+            case 2:
+                printf("Entrez la valeur à supprimer : ");
+                scanf("%d", &valeur);
+                Suppression(valeur, racine);
+                printf("Valeur %d supprimée de l'arbre (si elle était présente).\n", valeur);
+                break;
+
+            case 3:
+                printf("Entrez la valeur à rechercher : ");
+                scanf("%d", &valeur);
+                resultat = recherche(*racine, valeur);
+                if (resultat != NULL) {
+                    printf("Valeur %d trouvée dans l'arbre.\n", valeur);
+                } else {
+                    printf("Valeur %d non trouvée dans l'arbre.\n", valeur);
+                }
+                break;
+
+            case 4:
+                printf("Quitter le programme.\n");
+                break;
+
+            default:
+                printf("Option invalide, veuillez réessayer.\n");
+        }
+    } while (choix != 4);
+}
 
 
 

@@ -22,5 +22,6 @@ void insertion(Noeud** racine, int x);
 
 // Fonction pour rechercher un élément dans l'arbre
 Noeud* recherche(Noeud* racine, int x);
-
+// Fonction menu
+void menu_abr(Noeud** racine);
 #endif // ARBRE_BINAIRE_H
