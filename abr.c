@@ -168,10 +168,9 @@ Noeud* recherche(Noeud* racine, int x) {
     }
     return NULL;  // Si l'élément n'est pas trouvé, retourner NULL
 }
-void menu(Noeud** racine) {
+void menu_abr(Noeud** racine) {
     int choix, valeur;
     Noeud* resultat;
-
     do {
         printf("\n--- Menu de traitement de l'arbre binaire de recherche ---\n");
         printf("1. Insertion\n");
