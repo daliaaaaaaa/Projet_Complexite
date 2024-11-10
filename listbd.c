@@ -94,7 +94,7 @@ void supp_ele(Listbd** tete, int key) {
 }
 
 
-int main() {
+void listbd_operations() {
     Listbd* tete = NULL;
 
     insertAttete(&tete, 10);

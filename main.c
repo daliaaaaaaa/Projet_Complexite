@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <listbd.h>
 
 // void bst_operations();   // Function to manage BST operations
 void btree_operations(); // Function to manage B-tree operations
@@ -19,18 +20,32 @@ int main()
 
         switch (choice)
         {
-        case 1:
-            // bst_operations(); // Function for BST operations
-            break;
-        case 2:
-            btree_operations(); // Function for B-tree operations
-            break;
-        case 3:
-            printf("Exiting...\n");
-            exit(0); // Exit the program
-        default:
-            printf("Invalid choice. Please try again.\n");
-        }
+case 1:
+{
+printf("Listes doublement chaînées: \n\n");
+//fonction()
+break;
+}
+case 2:
+{
+printf(" Arbre binaire de recherche (BST) : \n\n");
+//fonction()
+break;
+}
+case 3:
+{
+printf("B-tree : \n\n");
+//fonction()
+break;
+}
+case 4:
+
+{
+printf("Tas (Heap) : \n\n");
+//fonction()
+break;
+}
+}
     }
 
     return 0;
