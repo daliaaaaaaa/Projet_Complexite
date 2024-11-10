@@ -115,16 +115,16 @@ void listbd_operations() {
     affiche_tete(tete);
 
 
-/*
+int n ; 
+// n le nombre d element 
 clock_t t1, t2;
 float delta;
 t1=clock();
-//fonction
+insertAtqueue(&tete, 30);
 t2=clock();
 printf("\n");
 delta =(t2-t1)/CLOCKS_PER_SEC;
-Affichage(tab, n);
+// Affichage(tab, n);
 printf("\nLe temps d'execution = %f secondes pour n = %d",delta,n);
-*/
     return 0;
 }
