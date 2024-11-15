@@ -189,12 +189,12 @@ void search(struct BTreeNode *root, int key)
 
         if (i < node->num_keys && node->keys[i] == key)
         {
-            printf("Key %d found in the tree.\n", key);
+            // printf("Key %d found in the tree.\n", key);
             return;
         }
         else if (node->is_leaf)
         {
-            printf("Key %d not found in the tree.\n", key);
+            // printf("Key %d not found in the tree.\n", key);
             return;
         }
         else
@@ -203,7 +203,54 @@ void search(struct BTreeNode *root, int key)
         }
     }
 }
+void experiment()
+{
+    int degrees[] = {3, 4, 6, 10};
+    int num_degrees = sizeof(degrees) / sizeof(degrees[0]);
+    int num_operations = 1000; // Number of operations
+    LARGE_INTEGER frequency, start, end;
+    double insert_time, search_time;
 
+    printf("%-10s %-20s %-20s\n", "Degree", "Insert Time (ms)", "Search Time (ms)");
+    printf("---------------------------------------------------------------\n");
+
+    for (int d = 0; d < num_degrees; d++)
+    {
+        DegreeBTree = degrees[d];
+        struct BTreeNode *root = createNode(true);
+
+        // Prepare random keys
+        int *keys = (int *)malloc(num_operations * sizeof(int));
+        for (int i = 0; i < num_operations; i++)
+        {
+            keys[i] = rand();
+        }
+
+        // Measure insert time
+        QueryPerformanceFrequency(&frequency);
+        QueryPerformanceCounter(&start);
+        for (int i = 0; i < num_operations; i++)
+        {
+            insert(&root, keys[i]);
+        }
+        QueryPerformanceCounter(&end);
+        insert_time = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
+
+        // Measure search time
+        QueryPerformanceCounter(&start);
+        for (int i = 0; i < num_operations; i++)
+        {
+            search(root, keys[i]);
+        }
+        QueryPerformanceCounter(&end);
+        search_time = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
+
+        printf("%-10d %-20.4f %-20.4f\n", DegreeBTree, insert_time, search_time);
+
+        free(keys);
+        freeNode(root);
+    }
+}
 int main()
 {
 
@@ -232,7 +279,8 @@ int main()
         printf("2. Delete\n");
         printf("3. Search\n");
         printf("4. Print Tree\n");
-        printf("5. Exit\n");
+        printf("5. Experimentation\n");
+        printf("6. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -276,6 +324,10 @@ int main()
             break;
 
         case 5:
+            experiment();
+            break;
+
+        case 6:
             return 0;
 
         default:
