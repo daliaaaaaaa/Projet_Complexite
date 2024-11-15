@@ -17,16 +17,21 @@ struct BTreeNode *createNode(bool is_leaf)
         exit(EXIT_FAILURE);
     }
 
-    newNode->keys = (int *)malloc((DegreeBTree - 1) * sizeof(int));                            // Allocate memory for keys
-    newNode->children = (struct BTreeNode **)malloc(DegreeBTree * sizeof(struct BTreeNode *)); // Allocate memory for children
+    newNode->keys = (int *)malloc((DegreeBTree - 1) * sizeof(int));
+    newNode->children = (struct BTreeNode **)malloc(DegreeBTree * sizeof(struct BTreeNode *));
+
     if (newNode->keys == NULL || newNode->children == NULL)
     {
-        perror("Memory allocation failed");
+        perror("Memory allocation failed for keys/children arrays");
+        free(newNode->keys);
+        free(newNode->children);
+        free(newNode);
         exit(EXIT_FAILURE);
     }
 
     newNode->num_keys = 0;
     newNode->is_leaf = is_leaf;
+
     for (int i = 0; i < DegreeBTree; i++)
     {
         newNode->children[i] = NULL;
@@ -91,6 +96,7 @@ void insertNonFull(struct BTreeNode *node, int key)
 
     if (node->is_leaf)
     {
+        // Find the correct position for the new key
         while (i >= 0 && node->keys[i] > key)
         {
             node->keys[i + 1] = node->keys[i];
@@ -102,18 +108,15 @@ void insertNonFull(struct BTreeNode *node, int key)
     else
     {
         while (i >= 0 && node->keys[i] > key)
-        {
             i--;
-        }
+
         i++;
 
         if (node->children[i]->num_keys == DegreeBTree - 1)
         {
             splitChild(node, i);
             if (node->keys[i] < key)
-            {
                 i++;
-            }
         }
         insertNonFull(node->children[i], key);
     }
@@ -121,24 +124,31 @@ void insertNonFull(struct BTreeNode *node, int key)
 
 void insert(struct BTreeNode **root, int key)
 {
-    struct BTreeNode *node = *root;
-
-    if (node == NULL)
+    if (*root == NULL)
     {
+        // Tree is empty, create a new node
         *root = createNode(true);
         (*root)->keys[0] = key;
         (*root)->num_keys = 1;
+        return;
     }
-    else
+    bool found = search(*root, key);
+    if (!found)
     {
-        if (node->num_keys == DegreeBTree - 1)
+        struct BTreeNode *r = *root;
+
+        if (r->num_keys == DegreeBTree - 1)
         {
             struct BTreeNode *new_root = createNode(false);
-            new_root->children[0] = node;
-            splitChild(new_root, 0);
             *root = new_root;
+            new_root->children[0] = r;
+            splitChild(new_root, 0);
+            insertNonFull(new_root, key);
         }
-        insertNonFull(*root, key);
+        else
+        {
+            insertNonFull(r, key);
+        }
     }
 }
 
@@ -170,49 +180,34 @@ void print_tree(struct BTreeNode *root)
     traverse(root, 0);
 }
 
-void search(struct BTreeNode *root, int key)
+bool search(struct BTreeNode *node, int key)
 {
-    if (root == NULL)
-    {
-        printf("Tree is empty.\n");
-        return;
-    }
+    if (node == NULL)
+        return false;
 
-    struct BTreeNode *node = root;
-    while (node != NULL)
-    {
-        int i = 0;
-        while (i < node->num_keys && key > node->keys[i])
-        {
-            i++;
-        }
+    int i = 0;
+    while (i < node->num_keys && key > node->keys[i])
+        i++;
 
-        if (i < node->num_keys && node->keys[i] == key)
-        {
-            // printf("Key %d found in the tree.\n", key);
-            return;
-        }
-        else if (node->is_leaf)
-        {
-            // printf("Key %d not found in the tree.\n", key);
-            return;
-        }
-        else
-        {
-            node = node->children[i];
-        }
-    }
+    if (i < node->num_keys && node->keys[i] == key)
+        return true;
+
+    if (node->is_leaf)
+        return false;
+
+    return search(node->children[i], key);
 }
+
 void experiment()
 {
-    int degrees[] = {3, 4, 6, 10};
+    int degrees[] = {3, 4, 6, 8, 10};
     int num_degrees = sizeof(degrees) / sizeof(degrees[0]);
-    int num_operations = 1000; // Number of operations
+    int num_operations = 50; // Increase the number of operations
     LARGE_INTEGER frequency, start, end;
-    double insert_time, search_time;
+    double insert_time, search_time, delete_time;
 
-    printf("%-10s %-20s %-20s\n", "Degree", "Insert Time (ms)", "Search Time (ms)");
-    printf("---------------------------------------------------------------\n");
+    printf("%-10s %-20s %-20s %-20s\n", "Degree", "Insert Time (ms)", "Search Time (ms)", "Delete Time (ms)");
+    printf("--------------------------------------------------------------------------\n");
 
     for (int d = 0; d < num_degrees; d++)
     {
@@ -221,9 +216,14 @@ void experiment()
 
         // Prepare random keys
         int *keys = (int *)malloc(num_operations * sizeof(int));
+        if (keys == NULL)
+        {
+            perror("Memory allocation failed");
+            exit(EXIT_FAILURE);
+        }
         for (int i = 0; i < num_operations; i++)
         {
-            keys[i] = rand();
+            keys[i] = rand() % 100; // Use a larger range to reduce duplicates
         }
 
         // Measure insert time
@@ -245,17 +245,248 @@ void experiment()
         QueryPerformanceCounter(&end);
         search_time = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
 
-        printf("%-10d %-20.4f %-20.4f\n", DegreeBTree, insert_time, search_time);
+        // Measure delete time
+        QueryPerformanceCounter(&start);
+        for (int i = 0; i < num_operations; i++)
+        {
+            deleteNode(&root, keys[i]);
+        }
+        QueryPerformanceCounter(&end);
+        delete_time = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
+
+        printf("%-10d %-20.4f %-20.4f %-20.4f\n", DegreeBTree, insert_time, search_time, delete_time);
 
         free(keys);
         freeNode(root);
     }
 }
+bool deleteNode(struct BTreeNode **root, int key)
+{
+    if (*root == NULL)
+    {
+        // printf("The tree is empty\n");
+        return false;
+    }
+
+    bool result = delete (*root, key);
+
+    if ((*root)->num_keys == 0)
+    {
+        struct BTreeNode *tmp = *root;
+        if ((*root)->is_leaf)
+            *root = NULL;
+        else
+            *root = (*root)->children[0];
+        free(tmp->keys);
+        free(tmp->children);
+        free(tmp);
+    }
+    return result;
+}
+
+// Modify delete function to return bool
+bool delete(struct BTreeNode *node, int key)
+{
+    // Check if the key exists in the tree
+    if (!search(node, key))
+    {
+        return false;
+    }
+
+    int idx = 0;
+    while (idx < node->num_keys && node->keys[idx] < key)
+        idx++;
+
+    bool result = false;
+
+    if (idx < node->num_keys && node->keys[idx] == key)
+    {
+        if (node->is_leaf)
+        {
+            removeFromLeaf(node, idx);
+            result = true;
+        }
+        else
+        {
+            removeFromNonLeaf(node, idx);
+            result = true;
+        }
+    }
+    else
+    {
+        if (node->is_leaf)
+        {
+            printf("The key %d is not present in the tree\n", key);
+            return false;
+        }
+
+        bool flag = (idx == node->num_keys);
+
+        if (node->children[idx]->num_keys < (DegreeBTree + 1) / 2)
+            fill(node, idx);
+
+        if (flag && idx > node->num_keys)
+            result = delete (node->children[idx - 1], key);
+        else
+            result = delete (node->children[idx], key);
+    }
+    return result;
+}
+
+// Implement removeFromLeaf
+void removeFromLeaf(struct BTreeNode *node, int idx)
+{
+    for (int i = idx + 1; i < node->num_keys; ++i)
+        node->keys[i - 1] = node->keys[i];
+
+    node->num_keys--;
+}
+
+// Implement removeFromNonLeaf
+void removeFromNonLeaf(struct BTreeNode *node, int idx)
+{
+    int key = node->keys[idx];
+
+    if (node->children[idx]->num_keys >= (DegreeBTree + 1) / 2)
+    {
+        int pred = getPredecessor(node->children[idx]);
+        node->keys[idx] = pred;
+        delete (node->children[idx], pred);
+    }
+    else if (node->children[idx + 1]->num_keys >= (DegreeBTree + 1) / 2)
+    {
+        int succ = getSuccessor(node->children[idx + 1]);
+        node->keys[idx] = succ;
+        delete (node->children[idx + 1], succ);
+    }
+    else
+    {
+        merge(node, idx);
+        delete (node->children[idx], key);
+    }
+}
+
+int getPredecessor(struct BTreeNode *node)
+{
+    while (!node->is_leaf)
+        node = node->children[node->num_keys];
+
+    return node->keys[node->num_keys - 1];
+}
+
+int getSuccessor(struct BTreeNode *node)
+{
+    while (!node->is_leaf)
+        node = node->children[0];
+
+    return node->keys[0];
+}
+
+void fill(struct BTreeNode *node, int idx)
+{
+    if (idx != 0 && node->children[idx - 1]->num_keys >= (DegreeBTree + 1) / 2)
+        borrowFromPrev(node, idx);
+    else if (idx != node->num_keys && node->children[idx + 1]->num_keys >= (DegreeBTree + 1) / 2)
+        borrowFromNext(node, idx);
+    else
+    {
+        if (idx != node->num_keys)
+            merge(node, idx);
+        else
+            merge(node, idx - 1);
+    }
+}
+
+void borrowFromPrev(struct BTreeNode *node, int idx)
+{
+    struct BTreeNode *child = node->children[idx];
+    struct BTreeNode *sibling = node->children[idx - 1];
+
+    for (int i = child->num_keys - 1; i >= 0; --i)
+        child->keys[i + 1] = child->keys[i];
+
+    if (!child->is_leaf)
+    {
+        for (int i = child->num_keys; i >= 0; --i)
+            child->children[i + 1] = child->children[i];
+    }
+
+    child->keys[0] = node->keys[idx - 1];
+
+    if (!child->is_leaf)
+        child->children[0] = sibling->children[sibling->num_keys];
+
+    node->keys[idx - 1] = sibling->keys[sibling->num_keys - 1];
+
+    child->num_keys += 1;
+    sibling->num_keys -= 1;
+}
+
+void borrowFromNext(struct BTreeNode *node, int idx)
+{
+    struct BTreeNode *child = node->children[idx];
+    struct BTreeNode *sibling = node->children[idx + 1];
+
+    child->keys[child->num_keys] = node->keys[idx];
+
+    if (!child->is_leaf)
+        child->children[child->num_keys + 1] = sibling->children[0];
+
+    node->keys[idx] = sibling->keys[0];
+
+    for (int i = 1; i < sibling->num_keys; ++i)
+        sibling->keys[i - 1] = sibling->keys[i];
+
+    if (!sibling->is_leaf)
+    {
+        for (int i = 1; i <= sibling->num_keys; ++i)
+            sibling->children[i - 1] = sibling->children[i];
+    }
+
+    child->num_keys += 1;
+    sibling->num_keys -= 1;
+}
+
+void merge(struct BTreeNode *node, int idx)
+{
+    struct BTreeNode *child = node->children[idx];
+    struct BTreeNode *sibling = node->children[idx + 1];
+
+    // Pull a key from the parent node into the child
+    child->keys[DegreeBTree / 2 - 1] = node->keys[idx];
+
+    // Copy keys from sibling to child
+    for (int i = 0; i < sibling->num_keys; ++i)
+        child->keys[i + DegreeBTree / 2] = sibling->keys[i];
+
+    // Copy children from sibling to child, if not a leaf
+    if (!child->is_leaf)
+    {
+        for (int i = 0; i <= sibling->num_keys; ++i)
+            child->children[i + DegreeBTree / 2] = sibling->children[i];
+    }
+
+    // Shift keys in the parent node
+    for (int i = idx + 1; i < node->num_keys; ++i)
+        node->keys[i - 1] = node->keys[i];
+
+    // Shift children in the parent node
+    for (int i = idx + 2; i <= node->num_keys; ++i)
+        node->children[i - 1] = node->children[i];
+
+    // Update key counts
+    child->num_keys += sibling->num_keys + 1;
+    node->num_keys--;
+
+    // Free the sibling node
+    freeNode(sibling);
+}
+
 int main()
 {
 
     int choice, key;
-    const int tree_size = 100;
+    const int tree_size = 50;
 
     LARGE_INTEGER frequency, start, end;
     float insert_time, delete_time, search_time;
@@ -302,10 +533,13 @@ int main()
             scanf("%d", &key);
             QueryPerformanceFrequency(&frequency);
             QueryPerformanceCounter(&start);
-            // deleteNode(root, key);
+            bool deleted = deleteNode(&root, key);
             QueryPerformanceCounter(&end);
             delete_time = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
-            printf("Delete time: %.4f ms\n", delete_time);
+            if (deleted)
+                printf("Key deleted successfully. Delete time: %.4f ms\n", delete_time);
+            else
+                printf("Key not found. Delete time: %.4f ms\n", delete_time);
             break;
 
         case 3:
@@ -313,10 +547,13 @@ int main()
             scanf("%d", &key);
             QueryPerformanceFrequency(&frequency);
             QueryPerformanceCounter(&start);
-            search(root, key);
+            bool found = search(root, key);
             QueryPerformanceCounter(&end);
             search_time = (double)(end.QuadPart - start.QuadPart) * 1000.0 / frequency.QuadPart;
-            printf("Search time: %.4f ms\n", search_time);
+            if (found)
+                printf("Key found! Search time: %.4f ms\n", search_time);
+            else
+                printf("Key not found! Search time: %.4f ms\n", search_time);
             break;
 
         case 4:
