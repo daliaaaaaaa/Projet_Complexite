@@ -3,12 +3,11 @@
 
 #include <stdbool.h>
 
-#define M 4
-
-struct BTreeNode {
+struct BTreeNode
+{
+    int *keys;
+    struct BTreeNode **children;
     int num_keys;
-    int keys[M - 1];
-    struct BTreeNode *children[M];
     bool is_leaf;
 };
 
@@ -18,11 +17,12 @@ void insertNonFull(struct BTreeNode *node, int key);
 void insert(struct BTreeNode **root, int key);
 void traverse(struct BTreeNode *node, int level);
 void print_tree(struct BTreeNode *root);
-void delete_predecessor(struct BTreeNode *node, int index);
+/* void delete_predecessor(struct BTreeNode *node, int index);
 void delete_successor(struct BTreeNode *node, int index);
 void delete_merge(struct BTreeNode *node, int index);
 void delete_sibling(struct BTreeNode *node, int index);
 void deleteNode(struct BTreeNode *node, int key);
+ */
 void search(struct BTreeNode *root, int key);
 
 #endif // BTREE_H
