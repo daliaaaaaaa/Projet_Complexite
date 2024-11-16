@@ -5,7 +5,7 @@
 
 #include "btree.h"
 
-int DegreeBTree = 4;
+int DegreeBTree = 3;
 
 // Function to create a new node
 struct BTreeNode *createNode(bool is_leaf)
@@ -43,14 +43,21 @@ struct BTreeNode *createNode(bool is_leaf)
 // Function to free a node
 void freeNode(struct BTreeNode *node)
 {
-    if (node)
-    {
-        free(node->keys);
-        free(node->children);
-        free(node);
-    }
-}
+    if (node == NULL)
+        return;
 
+    if (!node->is_leaf)
+    {
+        for (int i = 0; i <= node->num_keys; i++)
+        {
+            freeNode(node->children[i]);
+        }
+    }
+
+    free(node->keys);
+    free(node->children);
+    free(node);
+}
 // Adjust all other functions below...
 
 void splitChild(struct BTreeNode *parent, int index)
@@ -182,34 +189,34 @@ void print_tree(struct BTreeNode *root)
 
 bool search(struct BTreeNode *node, int key)
 {
-    if (node == NULL)
-        return false;
+    while (node != NULL)
+    {
+        int i = 0;
+        while (i < node->num_keys && key > node->keys[i])
+            i++;
 
-    int i = 0;
-    while (i < node->num_keys && key > node->keys[i])
-        i++;
+        if (i < node->num_keys && node->keys[i] == key)
+            return true;
 
-    if (i < node->num_keys && node->keys[i] == key)
-        return true;
+        if (node->is_leaf)
+            return false;
 
-    if (node->is_leaf)
-        return false;
-
-    return search(node->children[i], key);
+        node = node->children[i];
+    }
+    return false;
 }
 
 void experiment()
 {
-    int degrees[] = {3, 4, 6, 8, 10};
-    int num_degrees = sizeof(degrees) / sizeof(degrees[0]);
-    int num_operations = 50; // Increase the number of operations
+    int degrees[] = {5};
+    int num_operations = 1000;
     LARGE_INTEGER frequency, start, end;
     double insert_time, search_time, delete_time;
 
     printf("%-10s %-20s %-20s %-20s\n", "Degree", "Insert Time (ms)", "Search Time (ms)", "Delete Time (ms)");
     printf("--------------------------------------------------------------------------\n");
 
-    for (int d = 0; d < num_degrees; d++)
+    for (int d = 0; d < 3; d++)
     {
         DegreeBTree = degrees[d];
         struct BTreeNode *root = createNode(true);
@@ -223,7 +230,7 @@ void experiment()
         }
         for (int i = 0; i < num_operations; i++)
         {
-            keys[i] = rand() % 100; // Use a larger range to reduce duplicates
+            keys[i] = rand() % 100000; // Use a larger range to reduce duplicates
         }
 
         // Measure insert time
@@ -486,20 +493,17 @@ int main()
 {
 
     int choice, key;
-    const int tree_size = 50;
+    const int tree_size = 10;
 
     LARGE_INTEGER frequency, start, end;
     float insert_time, delete_time, search_time;
 
     struct BTreeNode *root = NULL;
 
-    // Seed the random number generator
-    srand(time(NULL));
-
     // Fill tree with initial values
     for (int j = 0; j < tree_size; j++)
     {
-        int value = rand() % 100; // Smaller range
+        int value = rand() % 1000; // Smaller range
         insert(&root, value);
     }
 
