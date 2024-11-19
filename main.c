@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "abr.h"
+#include "btree.h"
+
 // void bst_operations();   // Function to manage BST operations
-// void btree_operations(); // Function to manage B-tree operations
+void btree_operations(); // Function to manage B-tree operations
 
 int main()
 {
@@ -36,7 +38,7 @@ int main()
         case 3:
         {
             printf("B-tree : \n\n");
-            // fonction()
+            btree_operations();
             break;
         }
         case 4:
@@ -50,7 +52,7 @@ int main()
             printf("Quitter le programme.\n");
             break;
         }
-    } while(choice!=5);
+    } while (choice != 5);
 
     return 0;
 }
