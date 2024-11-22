@@ -38,7 +38,7 @@ int main()
         case 3:
         {
             printf("B-tree : \n\n");
-            btree_operations();
+            //btree_operations();
             break;
         }
         case 4:
