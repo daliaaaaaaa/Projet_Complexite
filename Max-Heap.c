@@ -45,9 +45,15 @@ int rechercherElement(int arr[], int n, int element) {
 }
 
 void insererElement(int arr[], int *n, int element) {
+    arr[*n] = element;
     (*n)++;
-    arr[*n - 1] = element;
-    construireTasMax(arr, *n);
+    int i = *n - 1;
+
+    // Maintenir la propriété du tas
+    while (i > 0 && arr[(i - 1) / 2] < arr[i]) {
+        echanger(&arr[i], &arr[(i - 1) / 2]);
+        i = (i - 1) / 2;
+    }
 }
 
 void supprimerMax(int arr[], int *n) {
@@ -202,7 +208,6 @@ void operationsTAS() {
             afficherTableau(arr, n);
             break;
         case 5:
-            srand(time(NULL));
             mesurerComplexite();
             break;
         case 6:

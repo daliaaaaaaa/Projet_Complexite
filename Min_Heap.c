@@ -49,13 +49,17 @@ int rechercherElement(int arr[], int n, int element) {
     return -1; // Élément non trouvé
 }
 
-// Insérer un élément dans le Min-Heap
 void insererElement(int arr[], int *n, int element) {
+    arr[*n] = element;
     (*n)++;
-    arr[*n - 1] = element;
-    construireTasMin(arr, *n);
-}
+    int i = *n - 1;
 
+    // Maintenir la propriété du tas
+    while (i > 0 && arr[(i - 1) / 2] < arr[i]) {
+        echanger(&arr[i], &arr[(i - 1) / 2]);
+        i = (i - 1) / 2;
+    }
+}
 // Supprimer la racine (le plus petit élément) du Min-Heap
 void supprimerMin(int arr[], int *n) {
     if (*n <= 0)
@@ -137,7 +141,7 @@ void operationsTAS() {
     construireTasMin(arr, 10);
 
     while (1) {
-        printf("\nOpérations sur le TAS (Min-Heap):\n");
+        printf("\nOperations sur le TAS (Min-Heap):\n");
         printf("1. Insérer\n");
         printf("2. Supprimer\n");
         printf("3. Rechercher\n");
