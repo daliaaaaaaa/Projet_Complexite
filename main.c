@@ -32,13 +32,13 @@ int main()
         case 2:
         {
             printf(" Arbre binaire de recherche (BST) : \n\n");
-            menu_abr(&racine);
+            // menu_abr(&racine);
             break;
         }
         case 3:
         {
             printf("B-tree : \n\n");
-            //btree_operations();
+            btree_operations();
             break;
         }
         case 4:
