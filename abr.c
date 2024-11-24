@@ -267,53 +267,55 @@ void menu_abr(Noeud **racine)
 
         case 4:
         {
-            
+
             FILE *file = fopen("complexite_temps_abr.csv", "w");
-            int tailles[] = {100, 500, 1000, 15000, 20000, 25000, 30000}; // Tailles de l'arbre
+            int tailles[] = {100, 200,300,400, 500, 1000, 2000,3000,4000, 5000,6000,7000,8000,9000, 10000, 20000, 30000}; // Tailles de l'arbre
             int taille_count = sizeof(tailles) / sizeof(tailles[0]);
             clock_t start, end;
             double time_taken;
-            fprintf(file, "Taille,temps insertion,temps recherche,temps suppression\n");
+            fprintf(file, "Taille,Temps insertion,Temps recherche,Temps suppression\n");
             for (int j = 0; j < taille_count; j++)
             {
-                srand(time(NULL)); 
+                srand(time(NULL));
                 printf("\nCalcul des temps pour taille %d :\n", tailles[j]);
-                fprintf(file, "%d ", tailles[j]);
+                fprintf(file, "%d,", tailles[j]);
                 // Mesurer le temps pour l'insertion
                 start = clock();
                 for (i = 1; i <= tailles[j]; i++)
                 {
-                    int rand_value=rand()%1000+1;
+                    int rand_value = rand() % 1000 + 1;
                     insertion(racine, i);
                 }
                 end = clock();
-                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC * 1000; // Convertir en millisecondes
-                printf("Temps pour insertion de %d noeuds : %.2f ms\n", tailles[j], time_taken);
-                fprintf(file, " %f ", time_taken);
+                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC; // Convertir en millisecondes
+                printf("Temps pour insertion de %d noeuds : %.2f s\n", tailles[j], time_taken);
+                fprintf(file, "%f,", time_taken);
                 // Mesurer le temps pour la recherche
                 start = clock();
-                
-                for (int k = 0; k < tailles[j]; k++) {  // Répéter la recherche 10 fois pour chaque taille
+
+                for (int k = 0; k < tailles[j]; k++)
+                { // Répéter la recherche 10 fois pour chaque taille
                     int random_value = rand() % 1000 + 1;
                     recherche(*racine, random_value);
                 }
-                
+
                 end = clock();
-                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC * 1000; // Convertir en millisecondes
-                printf("Temps pour recherche de %d noeuds : %.2f ms\n", tailles[j], time_taken);
-                fprintf(file, " %f ", time_taken);
+                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC; // Convertir en millisecondes
+                printf("Temps pour recherche de %d noeuds : %.2f s\n", tailles[j], time_taken);
+                fprintf(file, "%f,", time_taken);
                 // Mesurer le temps pour la suppression
-               
+
                 start = clock();
-                for (int k = 0; k < tailles[j]; k++) {  // Répéter la suppression 10 fois pour chaque taille
+                for (int k = 0; k < tailles[j]; k++)
+                { // Répéter la suppression 10 fois pour chaque taille
                     int random_value = rand() % 1000 + 1;
                     Suppression(random_value, racine);
                 }
                 end = clock();
 
-                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC * 1000; // Convertir en millisecondes
-                printf("Temps pour suppression de %d noeuds : %.2f ms\n", tailles[j], time_taken);
-                fprintf(file, " %f \n", time_taken);
+                time_taken = ((double)(end - start)) / CLOCKS_PER_SEC; // Convertir en millisecondes
+                printf("Temps pour suppression de %d noeuds : %.2f s\n", tailles[j], time_taken);
+                fprintf(file, "%f\n", time_taken);
             }
             fclose(file);
             break;
