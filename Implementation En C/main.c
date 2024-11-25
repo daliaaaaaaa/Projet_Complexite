@@ -1,10 +1,14 @@
+// Executez gcc main.c abr.c Btree.c listbd.c Max-heap.c Min-heap.c -o main
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "abr.h"
 #include "btree.h"
+// #include "listbd.h"
 
-// void bst_operations();   // Function to manage BST operations
-void btree_operations(); // Function to manage B-tree operations
+// void listbd_operations();
+// void menu_abr();
+void btree_operations();
 
 int main()
 {
@@ -26,13 +30,13 @@ int main()
         case 1:
         {
             printf("Listes doublement chaînées: \n");
-            // fonction()
+            // listbd_operations();
             break;
         }
         case 2:
         {
             printf(" Arbre binaire de recherche (BST) : \n\n");
-            // menu_abr(&racine);
+            /// menu_abr(&racine);
             break;
         }
         case 3:

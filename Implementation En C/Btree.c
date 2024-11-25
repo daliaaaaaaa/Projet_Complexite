@@ -489,7 +489,7 @@ void btree_operations()
     }
     print_tree(root);
 
-    while (1)
+    while (choice != 6)
     {
         printf("\nB-Tree Operations:\n");
         printf("1. Insert\n");
@@ -497,7 +497,7 @@ void btree_operations()
         printf("3. Search\n");
         printf("4. Print Tree\n");
         printf("5. Experimentation\n");
-        printf("6. Exit\n");
+        printf("6. Retour au menu pricipal\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -553,6 +553,8 @@ void btree_operations()
             break;
 
         case 6:
+            printf("Retour au menu principal\n");
+
             break;
 
         default:

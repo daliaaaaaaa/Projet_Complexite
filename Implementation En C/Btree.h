@@ -34,8 +34,6 @@ void removeKey(struct BTreeNode **root, int k);
 int findKey(struct BTreeNode *node, int k);
 void freeNode(struct BTreeNode *node);
 void experiment();
-
-
-
+void btree_operations();
 
 #endif // BTREE_H
