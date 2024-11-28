@@ -484,9 +484,11 @@ void btree_operations()
     // Fill tree with initial values
     for (int j = 0; j < tree_size; j++)
     {
-        int value = rand() % 100000; // Smaller range
+        int value = rand() % 1000; // Smaller range
         insert(&root, value);
     }
+
+    printf("Arbre Initial: \n");
     print_tree(root);
 
     while (choice != 6)

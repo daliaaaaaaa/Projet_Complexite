@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#define M 6 // Maximum degree of the B-tree
+#define M 6
 
 // B-tree node structure
 struct BTreeNode
