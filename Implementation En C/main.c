@@ -30,7 +30,7 @@ int main()
         case 1:
         {
             printf("Listes doublement chaînées: \n");
-            // listbd_operations();
+            bd_operations();
             break;
         }
         case 2:

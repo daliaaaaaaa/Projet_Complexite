@@ -1,36 +1,36 @@
-// listbd.h
 #ifndef LISTBD_H
 #define LISTBD_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdbool.h>
 
-// Structure de la liste doublement chaînée
-typedef struct Listbd {
-    int info;
-    struct Listbd* svt;
-    struct Listbd* prc;
-} Listbd;
+// Définition de la structure Node pour une liste chaînée bidirectionnelle
+typedef struct Node {
+    int data;
+    struct Node *prev;
+    struct Node *next;
+} Node;
 
-// Fonction pour créer un nœud
-Listbd* createNode(int info);
+// Déclarations des fonctions pour la gestion de la liste chaînée bidirectionnelle
 
-// Fonction pour insérer un élément en tête de liste
-void insertAttete(Listbd** tete, int info);
+// Fonction pour insérer un élément dans la liste triée
+void insert(Node **head, int value);
 
-// Fonction pour insérer un élément en fin de liste
-void insertAtqueue(Listbd** tete, int info);
+// Fonction pour supprimer un nœud de la liste
+void delete_node(Node **head, int key);
 
-// Fonction pour afficher la liste dans l'ordre
-void affiche_tete(Listbd* tete);
+// Fonction pour supprimer un élément par sa clé
+void removeKey(Node **head, int key);
 
-// Fonction pour afficher la liste dans l'ordre inverse
-void affiche_queue(Listbd* queue);
+// Fonction pour rechercher un élément dans la liste
+bool search(Node *head, int key);
 
-// Fonction pour supprimer un élément de la liste
-void supp_ele(Listbd** tete, int key);
+// Fonction pour afficher la liste
+void print_tree(Node *head);
 
-// Fonction pour tester les opérations sur la liste doublement chaînée
-void listbd_operations();
+// Fonction pour expérimenter les temps d'exécution des insertions
+void experiment();
+
+// Fonction pour gérer les opérations interactives sur la liste
+void bd_operations();
 
 #endif // LISTBD_H
