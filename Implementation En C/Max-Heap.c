@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "Heap.h"
 
 void echanger(int *a, int *b) {
     int temp = *a;
@@ -44,7 +45,7 @@ int rechercherElement(int arr[], int n, int element) {
     return -1; // Element non trouvé
 }
 
-void insererElement(int arr[], int *n, int element) {
+void insererElementMax(int arr[], int *n, int element) {
     arr[*n] = element;
     (*n)++;
     int i = *n - 1;
@@ -68,11 +69,11 @@ void supprimerMax(int arr[], int *n) {
     entasserMax(arr, *n, 0);
 }
 
-void mesurerComplexite() {
+void mesurerComplexiteMAX() {
     int tailles[] = {100, 500, 1000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
     int nbTailles = sizeof(tailles) / sizeof(tailles[0]);
 
-    FILE *fichier = fopen("complexite_temps_MAX_HEAP.csv", "w");
+    FILE *fichier = fopen("../Experimentation/complexite_temps_MAX_HEAP.csv", "w");
     if (fichier == NULL) {
         printf("Erreur lors de la création du fichier.\n");
         return;
@@ -93,7 +94,7 @@ void mesurerComplexite() {
         // Mesurer le temps d'insertion
         clock_t debut = clock();
         for (int i = 0; i < taille; i++) {
-            insererElement(arr, &n, rand() % 1000);
+            insererElementMax(arr, &n, rand() % 1000);
         }
         clock_t fin = clock();
         double tempsInsertion = ((double)(fin - debut)) / CLOCKS_PER_SEC;
@@ -128,7 +129,7 @@ void mesurerComplexite() {
 }
 
 
-void operationsTAS() {
+void operationsTASmax() {
     int choix, cle;
     int arr[100] = {8, 16, 5, 17, 2, 36, 18, 22, 7, 31};
     int n = 10;
@@ -154,13 +155,13 @@ void operationsTAS() {
             scanf("%d", &cle);
 
             clock_t debut1 = clock();
-            insererElement(arr1, &n, cle);
+            insererElementMax(arr1, &n, cle);
             clock_t fin1 = clock();
             double tempsPasse1 = (double)(fin1 - debut1) / CLOCKS_PER_SEC;
             printf("Temps pour le pire cas: %f secondes\n", tempsPasse1);
 
             clock_t debut2 = clock();
-            insererElement(arr2, &n, cle);
+            insererElementMax(arr2, &n, cle);
             clock_t fin2 = clock();
             double tempsPasse2 = (double)(fin2 - debut2) / CLOCKS_PER_SEC;
             printf("Temps pour le meilleur cas: %f secondes\n", tempsPasse2);
@@ -174,13 +175,6 @@ void operationsTAS() {
             clock_t fin3 = clock();
             double tempsPasse3 = (double)(fin3 - debut3) / CLOCKS_PER_SEC;
             printf("Temps pour le pire cas de suppression (racine): %f secondes\n", tempsPasse3);
-
-            int feuille = arr2[n - 1];  
-            clock_t debut4 = clock();
-            supprimerMax(arr2, &n);
-            clock_t fin4 = clock();
-            double tempsPasse4 = (double)(fin4 - debut4) / CLOCKS_PER_SEC;
-            printf("Temps pour le meilleur cas de suppression (feuille): %f secondes\n", tempsPasse4);
             break;
         case 3:
             printf("Entrez la cle a rechercher: ");
@@ -208,7 +202,7 @@ void operationsTAS() {
             afficherTableau(arr, n);
             break;
         case 5:
-            mesurerComplexite();
+            mesurerComplexiteMAX();
             break;
         case 6:
             return; // quitter
@@ -219,5 +213,5 @@ void operationsTAS() {
 }
 
 int main() {
-    operationsTAS();
+    operationsTASmax();
 }

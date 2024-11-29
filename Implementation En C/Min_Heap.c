@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "Heap.h"
 
 // Échanger deux éléments
 void echanger(int *a, int *b) {
@@ -49,13 +50,13 @@ int rechercherElement(int arr[], int n, int element) {
     return -1; // Élément non trouvé
 }
 
-void insererElement(int arr[], int *n, int element) {
+void insererElementMIN(int arr[], int *n, int element) {
     arr[*n] = element;
     (*n)++;
     int i = *n - 1;
 
     // Maintenir la propriété du tas
-    while (i > 0 && arr[(i - 1) / 2] < arr[i]) {
+    while (i > 0 && arr[(i - 1) / 2] > arr[i]) {
         echanger(&arr[i], &arr[(i - 1) / 2]);
         i = (i - 1) / 2;
     }
@@ -74,11 +75,11 @@ void supprimerMin(int arr[], int *n) {
 }
 
 // Mesurer la complexité des opérations
-void mesurerComplexite() {
+void mesurerComplexiteMIN() {
     int tailles[] = {100, 500, 1000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
     int nbTailles = sizeof(tailles) / sizeof(tailles[0]);
 
-    FILE *fichier = fopen("complexite_temps_Min_Heap.csv", "w");
+    FILE *fichier = fopen("../Experimentation/complexite_temps_Min_Heap.csv", "w");
     if (fichier == NULL) {
         printf("Erreur lors de la creation du fichier.\n");
         return;
@@ -99,7 +100,7 @@ void mesurerComplexite() {
         // Mesurer le temps d'insertion
         clock_t debut = clock();
         for (int i = 0; i < taille; i++) {
-            insererElement(arr, &n, rand() % 1000);
+            insererElementMIN(arr, &n, rand() % 1000);
         }
         clock_t fin = clock();
         double tempsInsertion = ((double)(fin - debut)) / CLOCKS_PER_SEC;
@@ -134,7 +135,7 @@ void mesurerComplexite() {
 }
 
 // Opérations sur le Min-Heap
-void operationsTAS() {
+void operationsTASmin() {
     int choix, cle;
     int arr[100] = {36, 31, 22, 18, 17, 16, 8, 7, 5, 2};
     int n = 10;
@@ -155,7 +156,7 @@ void operationsTAS() {
         case 1:
             printf("Entrez la clé à insérer: ");
             scanf("%d", &cle);
-            insererElement(arr, &n, cle);
+            insererElementMIN(arr, &n, cle);
             break;
         case 2:
             supprimerMin(arr, &n);
@@ -174,7 +175,7 @@ void operationsTAS() {
             afficherTableau(arr, n);
             break;
         case 5:
-            mesurerComplexite();
+            mesurerComplexitemin();
             break;
         case 6:
             return; // quitter
@@ -185,5 +186,5 @@ void operationsTAS() {
 }
 
 int main() {
-    operationsTAS();
+    operationsTASmin();
 }

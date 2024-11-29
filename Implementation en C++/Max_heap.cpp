@@ -73,7 +73,7 @@ void supprimerMax(vector<int> &arr) {
 // Measure performance complexity
 void mesurerComplexite() {
     vector<int> tailles = {100, 500, 1000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
-    ofstream fichier("complexite_temps_MAX_HEAP_C++.csv");
+    ofstream fichier("../Experimentation/complexite_temps_MAX_HEAP_C++.csv");
 
     if (!fichier.is_open()) {
         cerr << "Erreur lors de la création du fichier.\n";
