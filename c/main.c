@@ -3,12 +3,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "abr.h"
-#include "btree.h"
+// #include "btree.h"
+#include "listbd.h"
 // #include "listbd.h"
 
 // void listbd_operations();
 // void menu_abr();
-void btree_operations();
+//void btree_operations();
 
 int main()
 {
@@ -17,7 +18,7 @@ int main()
     do
     {
         printf("\nSelect a Data Structure:\n");
-        printf("1. Listes doublement chaînées: \n");
+        printf("1. Listes doublement chainees: \n");
         printf("2. Arbre binaire de recherche (BST) : \n");
         printf("3. B-Tree\n");
         printf("4. Tas (Heap)\n");
@@ -42,7 +43,7 @@ int main()
         case 3:
         {
             printf("B-tree : \n\n");
-            btree_operations();
+        //    btree_operations();
             break;
         }
         case 4:
