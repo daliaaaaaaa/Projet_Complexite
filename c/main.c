@@ -7,7 +7,11 @@
 #include "Heap.h"
 #include "listbd.h"
 
+void menu_abr();
 void btree_operations();
+void bd_operations();
+void operationsTASmax();
+void operationsTASmin();
 
 int main()
 {
@@ -45,7 +49,7 @@ int main()
             case 2:
             {
                 printf(" Arbre binaire de recherche (BST) : \n\n");
-                /// menu_abr(&racine);
+                menu_abr(&racine);
                 break;
             }
             case 3:
@@ -103,7 +107,7 @@ int main()
             {
             case 1:
                 printf("Trie par TAS:\n");
-                TriParTas_operations();
+                // TriParTas_operations();
                 break;
             case 2:
                 printf("Tri Fusion:\n");

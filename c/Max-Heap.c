@@ -3,13 +3,15 @@
 #include <time.h>
 #include "Heap.h"
 
-void echanger(int *a, int *b) {
+void echangerMax(int *a, int *b)
+{
     int temp = *a;
     *a = *b;
     *b = temp;
 }
 
-void entasserMax(int arr[], int n, int i) {
+void entasserMax(int arr[], int n, int i)
+{
     int plusGrand = i;
     int gauche = 2 * i + 1;
     int droite = 2 * i + 2;
@@ -20,47 +22,56 @@ void entasserMax(int arr[], int n, int i) {
     if (droite < n && arr[droite] > arr[plusGrand])
         plusGrand = droite;
 
-    if (plusGrand != i) {
-        echanger(&arr[i], &arr[plusGrand]);
+    if (plusGrand != i)
+    {
+        echangerMax(&arr[i], &arr[plusGrand]);
         entasserMax(arr, n, plusGrand);
     }
 }
 
-void construireTasMax(int arr[], int n) {
+void construireTasMax(int arr[], int n)
+{
     for (int i = n / 2 - 1; i >= 0; i--)
         entasserMax(arr, n, i);
 }
 
-void afficherTableau(int arr[], int n) {
+void afficherTableauMax(int arr[], int n)
+{
     for (int i = 0; i < n; ++i)
         printf("%d ", arr[i]);
     printf("\n");
 }
 
-int rechercherElement(int arr[], int n, int element) {
-    for (int i = 0; i < n; i++) {
+int rechercherElementMax(int arr[], int n, int element)
+{
+    for (int i = 0; i < n; i++)
+    {
         if (arr[i] == element)
             return i;
     }
     return -1; // Element non trouvé
 }
 
-void insererElementMax(int arr[], int *n, int element) {
+void insererElementMax(int arr[], int *n, int element)
+{
     arr[*n] = element;
     (*n)++;
     int i = *n - 1;
 
     // Maintenir la propriété du tas
-    while (i > 0 && arr[(i - 1) / 2] < arr[i]) {
-        echanger(&arr[i], &arr[(i - 1) / 2]);
+    while (i > 0 && arr[(i - 1) / 2] < arr[i])
+    {
+        echangerMax(&arr[i], &arr[(i - 1) / 2]);
         i = (i - 1) / 2;
     }
 }
 
-void supprimerMax(int arr[], int *n) {
+void supprimerMax(int arr[], int *n)
+{
     if (*n <= 0)
         return;
-    if (*n == 1) {
+    if (*n == 1)
+    {
         (*n)--;
         return;
     }
@@ -69,12 +80,14 @@ void supprimerMax(int arr[], int *n) {
     entasserMax(arr, *n, 0);
 }
 
-void mesurerComplexiteMAX() {
+void mesurerComplexiteMAX()
+{
     int tailles[] = {100, 500, 1000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
     int nbTailles = sizeof(tailles) / sizeof(tailles[0]);
 
     FILE *fichier = fopen("../Experimentation/complexite_temps_MAX_HEAP.csv", "w");
-    if (fichier == NULL) {
+    if (fichier == NULL)
+    {
         printf("Erreur lors de la création du fichier.\n");
         return;
     }
@@ -84,7 +97,8 @@ void mesurerComplexiteMAX() {
 
     printf("Mesure de la complexité (résultats enregistrés dans 'complexite_temps_MAX_HEAP.csv'):\n");
 
-    for (int t = 0; t < nbTailles; t++) {
+    for (int t = 0; t < nbTailles; t++)
+    {
         int taille = tailles[t];
         int *arr = (int *)malloc(taille * sizeof(int));
         int n = 0;
@@ -93,7 +107,8 @@ void mesurerComplexiteMAX() {
 
         // Mesurer le temps d'insertion
         clock_t debut = clock();
-        for (int i = 0; i < taille; i++) {
+        for (int i = 0; i < taille; i++)
+        {
             insererElementMax(arr, &n, rand() % 1000);
         }
         clock_t fin = clock();
@@ -102,8 +117,9 @@ void mesurerComplexiteMAX() {
 
         // Mesurer le temps de recherche
         debut = clock();
-        for (int i = 0; i < taille; i++) {
-            rechercherElement(arr, n, rand() % 1000);
+        for (int i = 0; i < taille; i++)
+        {
+            rechercherElementMax(arr, n, rand() % 1000);
         }
         fin = clock();
         double tempsRecherche = ((double)(fin - debut)) / CLOCKS_PER_SEC;
@@ -111,7 +127,8 @@ void mesurerComplexiteMAX() {
 
         // Mesurer le temps de suppression
         debut = clock();
-        for (int i = 0; i < taille; i++) {
+        for (int i = 0; i < taille; i++)
+        {
             supprimerMax(arr, &n);
         }
         fin = clock();
@@ -128,17 +145,18 @@ void mesurerComplexiteMAX() {
     printf("\nLes donnees de complexite temporelle ont ete enregistrees dans 'complexite_temps_MAX_HEAP.csv'.\n");
 }
 
-
-void operationsTASmax() {
+void operationsTASmax()
+{
     int choix, cle;
     int arr[100] = {8, 16, 5, 17, 2, 36, 18, 22, 7, 31};
     int n = 10;
     construireTasMax(arr, 10);
-    
+
     int arr1[10] = {36, 31, 22, 18, 17, 16, 8, 7, 5, 2};
     int arr2[10] = {36, 22, 31, 17, 8, 16, 18, 5, 7, 2};
 
-    while (1) {
+    while (1)
+    {
         printf("\nOperations sur le TAS:\n");
         printf("1. Inserer\n");
         printf("2. Supprimer\n");
@@ -149,7 +167,8 @@ void operationsTASmax() {
         printf("Entrez votre choix: ");
         scanf("%d", &choix);
 
-        switch (choix) {
+        switch (choix)
+        {
         case 1:
             printf("Entrez la cle a inserer: ");
             scanf("%d", &cle);
@@ -180,26 +199,26 @@ void operationsTASmax() {
             printf("Entrez la cle a rechercher: ");
             scanf("%d", &cle);
             clock_t debut5 = clock();
-            rechercherElement(arr, n, cle);
+            rechercherElementMax(arr, n, cle);
             clock_t fin5 = clock();
             double tempsPasse5 = (double)(fin5 - debut5) / CLOCKS_PER_SEC;
             printf("Temps : %f secondes\n", tempsPasse5);
 
             clock_t debut6 = clock();
-            rechercherElement(arr, n, cle);
+            rechercherElementMax(arr, n, cle);
             clock_t fin6 = clock();
             double tempsPasse6 = (double)(fin6 - debut6) / CLOCKS_PER_SEC;
             printf("Temps pour le pire cas: %f secondes\n", tempsPasse6);
 
             clock_t debut7 = clock();
-            rechercherElement(arr, n, cle);
+            rechercherElementMax(arr, n, cle);
             clock_t fin7 = clock();
             double tempsPasse7 = (double)(fin7 - debut7) / CLOCKS_PER_SEC;
             printf("Temps pour le meilleur cas: %f secondes\n", tempsPasse7);
 
             break;
         case 4:
-            afficherTableau(arr, n);
+            afficherTableauMax(arr, n);
             break;
         case 5:
             mesurerComplexiteMAX();
@@ -210,8 +229,4 @@ void operationsTASmax() {
             printf("Choix invalide. Reessayez.\n");
         }
     }
-}
-
-int main() {
-    operationsTASmax();
 }
