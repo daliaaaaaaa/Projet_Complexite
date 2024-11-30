@@ -11,7 +11,7 @@ typedef struct Node {
 } Node;
 
 // Fonction pour inserer un element dans la liste (triee)
-void insert(Node **head, int value) {
+void insertbd(Node **head, int value) {
     Node *new_node = (Node *)malloc(sizeof(Node));
     new_node->data = value;
     new_node->prev = NULL;
@@ -48,7 +48,7 @@ void insert(Node **head, int value) {
     }
 }
 // Fonction pour supprimer un nœud dans la liste
-void delete_node(Node **head, int key) {
+void delete_nodebd(Node **head, int key) {
     Node *current = *head;
     
     // Recherche du nœud à supprimer
@@ -78,7 +78,7 @@ void delete_node(Node **head, int key) {
 }
 
 // Fonction pour supprimer un element par sa cle
-void removeKey(Node **head, int key) {
+void removeKeybd(Node **head, int key) {
     if (*head == NULL) {
         printf("La liste est vide.\n");
         return;
@@ -112,7 +112,7 @@ void removeKey(Node **head, int key) {
 }
 
 // Fonction pour rechercher un element dans la liste
-bool search(Node *head, int key) {
+bool searchbd(Node *head, int key) {
     Node *current = head;
 
     while (current != NULL) {
@@ -126,7 +126,7 @@ bool search(Node *head, int key) {
 }
 
 // Fonction pour afficher la liste
-void print_tree(Node *head) {
+void print_bd(Node *head) {
     Node *current = head;
 
     if (current == NULL) {
@@ -142,15 +142,15 @@ void print_tree(Node *head) {
     printf("\n");
 }
 
-// Fonction pour mesurer le temps d'execution des insertions
-void experiment() {
+// Fonction pour mesurer le temps d'execution des insertbdions
+void experimentbd() {
     struct Node* head = NULL;
     int n_values[] = {1, 100, 10000, 100000}; // Differentes tailles de donnees
     int n_tests = sizeof(n_values) / sizeof(n_values[0]);
     
-    printf("Experimentation sur les temps d'insertion :\n");
+    printf("experimentbdation sur les temps d'insertbdion :\n");
     printf("-------------------------------------------------\n");
-    printf("| Nombre d'elements | Temps d'insertion (ms)   |\n");
+    printf("| Nombre d'elements | Temps d'insertbdion (ms)   |\n");
     printf("-------------------------------------------------\n");
 
     for (int i = 0; i < n_tests; i++) {
@@ -160,14 +160,14 @@ void experiment() {
 
         // Liberer la liste pour chaque test (si elle contient des donnees precedentes)
         while (head != NULL) {
-            delete_node(&head, head->data);
+            delete_nodebd(&head, head->data);
         }
 
-        // Mesurer le temps d'insertion de n elements aleatoires
+        // Mesurer le temps d'insertbdion de n elements aleatoires
         start_time = clock();
         for (int j = 0; j < n; j++) {
             int value = rand() % 1000; // Valeurs aleatoires entre 0 et 999
-            insert(&head, value);
+            insertbd(&head, value);
         }
         end_time = clock();
 
@@ -177,7 +177,7 @@ void experiment() {
     }
     
     printf("-------------------------------------------------\n");
-    printf("Fin de l'experimentation.\n");
+    printf("Fin de l'experimentbdation.\n");
 }
 
 
@@ -192,11 +192,11 @@ void bd_operations() {
     srand(time(NULL));
     for (int j = 0; j < tree_size; j++) {
         int value = rand() % 1000; // Plage plus petite
-        insert(&head, value);
+        insertbd(&head, value);
     }
 
     printf("Liste Initiale : \n");
-    print_tree(head);
+    print_bd(head);
 
     while (choice != 6) {
         printf("\nOperations sur la Liste Chainee Bidirectionnelle :\n");
@@ -204,7 +204,7 @@ void bd_operations() {
         printf("2. Supprimer\n");
         printf("3. Rechercher\n");
         printf("4. Afficher la Liste\n");
-        printf("5. Experimentation\n");
+        printf("5. experimentbdation\n");
         printf("6. Retour au menu principal\n");
         printf("Entrez votre choix : ");
         scanf("%d", &choice);
@@ -213,19 +213,19 @@ void bd_operations() {
         case 1:
             printf("Entrez la cle a inserer : ");
             scanf("%d", &key);
-            insert(&head, key);
+            insertbd(&head, key);
             break;
 
         case 2:
             printf("Entrez la cle a supprimer : ");
             scanf("%d", &key);
-            removeKey(&head, key);
+            removeKeybd(&head, key);
             break;
 
         case 3:
             printf("Entrez la cle a rechercher : ");
             scanf("%d", &key);
-            if (search(head, key)) {
+            if (searchbd(head, key)) {
                 printf("Cle trouvee !\n");
             } else {
                 printf("Cle non trouvee.\n");
@@ -233,11 +233,11 @@ void bd_operations() {
             break;
 
         case 4:
-            print_tree(head);
+            print_bd(head);
             break;
 
         case 5:
-            experiment();
+            experimentbd();
             break;
 
         case 6:
