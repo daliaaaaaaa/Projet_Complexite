@@ -3,14 +3,14 @@
 #include <stdbool.h>
 #include <time.h>
 
-// Definition d'un nœud pour une liste chaînee bidirectionnelle
+// Définition d'un nœud pour une liste chaînée bidirectionnelle
 typedef struct Node {
     int data;
     struct Node *prev;
     struct Node *next;
 } Node;
 
-// Fonction pour inserer un element dans la liste (triee)
+// Fonction pour insérer un élément dans la liste (triée)
 void insertbd(Node **head, int value) {
     Node *new_node = (Node *)malloc(sizeof(Node));
     new_node->data = value;
@@ -25,20 +25,16 @@ void insertbd(Node **head, int value) {
     Node *current = *head;
     Node *previous = NULL;
 
-    // Trouver la position correcte pour inserer
     while (current != NULL && current->data < value) {
         previous = current;
         current = current->next;
     }
 
-    // Inserer au debut
     if (previous == NULL) {
         new_node->next = *head;
         (*head)->prev = new_node;
         *head = new_node;
-    }
-    // Inserer au milieu ou à la fin
-    else {
+    } else {
         new_node->next = current;
         new_node->prev = previous;
         previous->next = new_node;
@@ -47,21 +43,19 @@ void insertbd(Node **head, int value) {
         }
     }
 }
+
 // Fonction pour supprimer un nœud dans la liste
 void delete_nodebd(Node **head, int key) {
     Node *current = *head;
-    
-    // Recherche du nœud à supprimer
+
     while (current != NULL && current->data != key) {
         current = current->next;
     }
 
-    // Si le nœud n'existe pas, on retourne
     if (current == NULL) {
         return;
     }
 
-    // Si le nœud à supprimer est le premier
     if (current->prev == NULL) {
         *head = current->next;
         if (*head != NULL) {
@@ -74,44 +68,10 @@ void delete_nodebd(Node **head, int key) {
         }
     }
 
-    free(current); // Liberer la memoire du nœud supprime
-}
-
-// Fonction pour supprimer un element par sa cle
-void removeKeybd(Node **head, int key) {
-    if (*head == NULL) {
-        printf("La liste est vide.\n");
-        return;
-    }
-
-    Node *current = *head;
-
-    // Chercher le nœud à supprimer
-    while (current != NULL && current->data != key) {
-        current = current->next;
-    }
-
-    if (current == NULL) {
-        printf("Cle non trouvee.\n");
-        return;
-    }
-
-    // Supprimer le nœud
-    if (current->prev != NULL) {
-        current->prev->next = current->next;
-    } else {
-        *head = current->next;
-    }
-
-    if (current->next != NULL) {
-        current->next->prev = current->prev;
-    }
-
     free(current);
-    printf("Cle %d supprimee avec succès.\n", key);
 }
 
-// Fonction pour rechercher un element dans la liste
+// Fonction pour rechercher un élément dans la liste
 bool searchbd(Node *head, int key) {
     Node *current = head;
 
@@ -142,93 +102,124 @@ void print_bd(Node *head) {
     printf("\n");
 }
 
-// Fonction pour mesurer le temps d'execution des insertbdions
-void experimentbd() {
-    struct Node* head = NULL;
-    int n_values[] = {1, 100, 10000, 100000}; // Differentes tailles de donnees
-    int n_tests = sizeof(n_values) / sizeof(n_values[0]);
-    
-    printf("experimentbdation sur les temps d'insertbdion :\n");
-    printf("-------------------------------------------------\n");
-    printf("| Nombre d'elements | Temps d'insertbdion (ms)   |\n");
-    printf("-------------------------------------------------\n");
-
-    for (int i = 0; i < n_tests; i++) {
-        int n = n_values[i];
-        clock_t start_time, end_time;
-        double elapsed_time;
-
-        // Liberer la liste pour chaque test (si elle contient des donnees precedentes)
-        while (head != NULL) {
-            delete_nodebd(&head, head->data);
-        }
-
-        // Mesurer le temps d'insertbdion de n elements aleatoires
-        start_time = clock();
-        for (int j = 0; j < n; j++) {
-            int value = rand() % 1000; // Valeurs aleatoires entre 0 et 999
-            insertbd(&head, value);
-        }
-        end_time = clock();
-
-        // Calculer le temps ecoule en millisecondes
-        elapsed_time = ((double)(end_time - start_time) / CLOCKS_PER_SEC) * 1000;
-        printf("| %17d | %24.3f ms |\n", n, elapsed_time);
+// Fonction pour exporter la liste dans un fichier CSV
+void export_to_csv(Node *head, const char *filename) {
+    FILE *file = fopen("../Experimentation/complexite_temps_bd.csv", "w");
+    if (file == NULL) {
+        printf("Erreur lors de l'ouverture du fichier %s.\n", filename);
+        return;
     }
-    
-    printf("-------------------------------------------------\n");
-    printf("Fin de l'experimentbdation.\n");
+
+    fprintf(file, "Index,Data\n");
+    Node *current = head;
+    int index = 0;
+
+    while (current != NULL) {
+        fprintf(file, "%d,%d\n", index++, current->data);
+        current = current->next;
+    }
+
+    fclose(file);
+    printf("Données exportées avec succès dans le fichier %s.\n", filename);
 }
 
+// Fonction pour mesurer les performances et exporter dans un fichier CSV
+void measure_and_export_performance(const char *filename) {
+    const int sizes[] = {100, 1000, 10000}; // Tailles pour l'expérimentation
+    const int num_sizes = sizeof(sizes) / sizeof(sizes[0]);
+    FILE *file = fopen(filename, "w+");
+    if (file == NULL) {
+        printf("Erreur lors de l'ouverture du fichier %s.\n", filename);
+        return;
+    }
 
-// Fonction principale pour gerer les operations sur la liste chaînee bidirectionnelle
+    fprintf(file, "Taille,Temps insertion (ms),Temps recherche (ms),Temps suppression (ms)\n");
+
+    for (int i = 0; i < num_sizes; i++) {
+        int size = sizes[i];
+        Node *head = NULL;
+        clock_t start, end;
+
+        start = clock();
+        for (int j = 0; j < size; j++) {
+            int value = rand() % 1000;
+            insertbd(&head, value);
+        }
+        end = clock();
+        double insertion_time = ((double)(end - start)) / CLOCKS_PER_SEC * 1000;
+
+        start = clock();
+        for (int j = 0; j < size; j++) {
+            int value = rand() % 1000;
+            searchbd(head, value);
+        }
+        end = clock();
+        double search_time = ((double)(end - start)) / CLOCKS_PER_SEC * 1000 / size;
+
+        start = clock();
+        for (int j = 0; j < size; j++) {
+            delete_nodebd(&head, rand() % 1000);
+        }
+        end = clock();
+        double deletion_time = ((double)(end - start)) / CLOCKS_PER_SEC * 1000;
+
+        fprintf(file, "%d,%.2f,%.2f,%.2f\n", size, insertion_time, search_time, deletion_time);
+        printf("Données pour taille %d exportées : %.2f ms insertion, %.2f ms recherche, %.2f ms suppression.\n",
+               size, insertion_time, search_time, deletion_time);
+    }
+
+    fclose(file);
+    printf("Performances exportées avec succès dans le fichier %s.\n", filename);
+}
+
+// Fonction principale pour gérer les opérations sur la liste chaînée bidirectionnelle
 void bd_operations() {
     int choice = 0, key;
     const int tree_size = 30;
 
     Node *head = NULL;
 
-    // Remplir la liste avec des valeurs initiales
     srand(time(NULL));
     for (int j = 0; j < tree_size; j++) {
-        int value = rand() % 1000; // Plage plus petite
+        int value = rand() % 1000;
         insertbd(&head, value);
     }
 
     printf("Liste Initiale : \n");
     print_bd(head);
 
-    while (choice != 6) {
-        printf("\nOperations sur la Liste Chainee Bidirectionnelle :\n");
-        printf("1. Inserer\n");
+    while (choice != 7) {
+        printf("\nOpérations sur la Liste Chaînée Bidirectionnelle :\n");
+        printf("1. Insérer\n");
         printf("2. Supprimer\n");
         printf("3. Rechercher\n");
         printf("4. Afficher la Liste\n");
-        printf("5. experimentbdation\n");
-        printf("6. Retour au menu principal\n");
+        printf("5. Exporter vers CSV\n");
+        printf("6. Mesurer et exporter les performances\n");
+        printf("7. Quitter\n");
         printf("Entrez votre choix : ");
         scanf("%d", &choice);
 
         switch (choice) {
         case 1:
-            printf("Entrez la cle a inserer : ");
+            printf("Entrez la clé à insérer : ");
             scanf("%d", &key);
             insertbd(&head, key);
             break;
 
         case 2:
-            printf("Entrez la cle a supprimer : ");
+            printf("Entrez la clé à supprimer : ");
             scanf("%d", &key);
-            removeKeybd(&head, key);
+            delete_nodebd(&head, key);
             break;
 
         case 3:
-            printf("Entrez la cle a rechercher : ");
+            printf("Entrez la clé à rechercher : ");
             scanf("%d", &key);
             if (searchbd(head, key)) {
-                printf("Cle trouvee !\n");
+                printf("Clé trouvée !\n");
             } else {
-                printf("Cle non trouvee.\n");
+                printf("Clé non trouvée.\n");
             }
             break;
 
@@ -237,23 +228,25 @@ void bd_operations() {
             break;
 
         case 5:
-            experimentbd();
+            export_to_csv(head, "../Experimentation/complexite_temps_bd.csv");
             break;
 
         case 6:
-            printf("Retour au menu principal.\n");
+            measure_and_export_performance("performance.csv");
+            break;
+
+        case 7:
+            printf("Quitter.\n");
             break;
 
         default:
-            printf("Choix invalide. Veuillez reessayer.\n");
+            printf("Choix invalide. Veuillez réessayer.\n");
         }
     }
 }
 
 // Fonction principale
-
-
-// int main() {
-//     bd_operations();
-//     return 0;
-// }
+int main() {
+    bd_operations();
+    return 0;
+}
