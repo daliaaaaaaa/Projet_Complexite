@@ -6,12 +6,15 @@
 #include "btree.h"
 #include "Heap.h"
 #include "listbd.h"
+#include "../TriParTas/Merge_Sort.h"
 
 void menu_abr();
 void btree_operations();
 void bd_operations();
 void operationsTASmax();
 void operationsTASmin();
+void TriParFusion_operations();
+// void TriParTas_operations();
 
 int main()
 {
@@ -111,7 +114,7 @@ int main()
                 break;
             case 2:
                 printf("Tri Fusion:\n");
-                // Call the function for Tri Fusion
+                TriParFusion_operations();
                 break;
             case 3:
                 printf("Trie Rapide:\n");
