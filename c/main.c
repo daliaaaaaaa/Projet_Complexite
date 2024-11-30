@@ -1,4 +1,4 @@
-// Executez gcc main.c abr.c Btree.c listbd.c Max-heap.c Min_heap.c ../TriParTas/Merge_Sort.c ../TriParTas/Sort_Heap.h ../TriParTas/TriRapide.h -o main
+// Executez ./run_program.bat
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +9,7 @@
 #include "../TriParTas/Merge_Sort.h"
 #include "../TriParTas/Sort_Heap.h"
 #include "../TriParTas/TriRapide.h"
+#include "../TriParTas/gnomeSort.h"
 
 void menu_abr();
 void btree_operations();
@@ -18,6 +19,7 @@ void operationsTASmin();
 void TriParFusion();
 void TriParTas_operations();
 void TriRapide();
+void TriGnome();
 
 int main()
 {
@@ -127,6 +129,7 @@ int main()
                 break;
             case 4:
                 printf("Trie gnome:\n");
+                TriGnome();
                 break;
             case 5:
                 printf("Mesurer complexite\n");
