@@ -1,4 +1,4 @@
-// Executez gcc main.c abr.c Btree.c listbd.c Max-heap.c Min_heap.c ../TriParTas/Merge_Sort.c  -o main
+// Executez ./run_program.bat
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,14 +7,19 @@
 #include "Heap.h"
 #include "listbd.h"
 #include "../TriParTas/Merge_Sort.h"
+#include "../TriParTas/Sort_Heap.h"
+#include "../TriParTas/TriRapide.h"
+#include "../TriParTas/gnomeSort.h"
 
 void menu_abr();
 void btree_operations();
 void bd_operations();
 void operationsTASmax();
 void operationsTASmin();
-// void TriParFusion();
-// void TriParTas_operations();
+void TriParFusion();
+void TriParTas_operations();
+void TriRapide();
+void TriGnome();
 
 int main()
 {
@@ -102,7 +107,9 @@ int main()
             printf("1. Trie par TAS\n");
             printf("2. Trie Fusion\n");
             printf("3. Trie Rapide\n");
-            printf("4. Quitter\n");
+            printf("4. Trie gnome\n");
+            printf("5. Mesurer complexite\n");
+            printf("6. Quitter\n");
             printf("Enter your choice: ");
             scanf("%d", &choice);
 
@@ -110,7 +117,7 @@ int main()
             {
             case 1:
                 printf("Trie par TAS:\n");
-                // TriParTas_operations();
+                TriParTas_operations();
                 break;
             case 2:
                 printf("Tri Fusion:\n");
@@ -118,9 +125,16 @@ int main()
                 break;
             case 3:
                 printf("Trie Rapide:\n");
-                // Call the function for Trie Rapide
+                TriRapide();
                 break;
             case 4:
+                printf("Trie gnome:\n");
+                TriGnome();
+                break;
+            case 5:
+                printf("Mesurer complexite\n");
+                break;
+            case 6:
                 printf("Quitter le programme.\n");
                 break;
             default:
