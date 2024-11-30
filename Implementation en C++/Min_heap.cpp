@@ -57,7 +57,7 @@ void insererElement(vector<int> &arr, int element) {
     arr.push_back(element); 
     int i = arr.size() - 1; 
 
-    while (i > 0 && arr[(i - 1) / 2] < arr[i]) {
+    while (i > 0 && arr[(i - 1) / 2] > arr[i]) {
         echanger(arr[i], arr[(i - 1) / 2]);  
         i = (i - 1) / 2; 
     }
@@ -76,7 +76,7 @@ void supprimerMin(vector<int> &arr) {
 void mesurerComplexite() {
     vector<int> tailles = {100, 500, 1000, 5000, 10000, 20000, 50000, 100000, 200000, 500000};
 
-    ofstream fichier("complexite_temps_Min_Heap_C++.csv");
+    ofstream fichier("../Experimentation/complexite_temps_Min_Heap_C++.csv");
     if (!fichier.is_open()) {
         cout << "Erreur lors de la creation du fichier.\n";
         return;
