@@ -39,6 +39,5 @@ void construireTasON(int arr[], int n);
 void triParTas(int arr[], int n, void (*constructionTas)(int[], int));
 void genererTableauAleatoire(int arr[], int n);
 void ecrireDansCSV(const char *nomFichier, const int tailles[], double temps[], int nbTests);
-void TriParTas_operations();
 
 #endif // HEAP_H

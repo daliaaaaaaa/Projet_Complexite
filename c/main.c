@@ -7,6 +7,7 @@
 #include "Heap.h"
 #include "listbd.h"
 #include "../TriParTas/Merge_Sort.h"
+#include "../TriParTas/Sort_Heap.h"
 
 void menu_abr();
 void btree_operations();
@@ -14,7 +15,7 @@ void bd_operations();
 void operationsTASmax();
 void operationsTASmin();
 void TriParFusion();
-// void TriParTas_operations();
+void TriParTas_operations();
 
 int main()
 {
@@ -102,7 +103,9 @@ int main()
             printf("1. Trie par TAS\n");
             printf("2. Trie Fusion\n");
             printf("3. Trie Rapide\n");
-            printf("4. Quitter\n");
+            printf("4. Trie gnome\n");
+            printf("5. Mesurer complexite\n");
+            printf("6. Quitter\n");
             printf("Enter your choice: ");
             scanf("%d", &choice);
 
@@ -110,7 +113,7 @@ int main()
             {
             case 1:
                 printf("Trie par TAS:\n");
-                // TriParTas_operations();
+                TriParTas_operations();
                 break;
             case 2:
                 printf("Tri Fusion:\n");
@@ -121,6 +124,12 @@ int main()
                 // Call the function for Trie Rapide
                 break;
             case 4:
+                printf("Trie gnome:\n");
+                break;
+            case 5:
+                printf("Mesurer complexite\n");
+                break;
+            case 6:
                 printf("Quitter le programme.\n");
                 break;
             default:
