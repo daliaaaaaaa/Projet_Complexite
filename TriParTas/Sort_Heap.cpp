@@ -117,10 +117,11 @@ int main() {
     }
 
     // Écrire les résultats dans des fichiers CSV
-    ecrireDansCSV("resultats_ON_C++.csv", taillesTests, tempsON);
-    ecrireDansCSV("resultats_ONLogN_C++.csv", taillesTests, tempsONLogN);
+    ecrireDansCSV("../Experimentation/resultats_ON_C++.csv", taillesTests, tempsON);
+    ecrireDansCSV("../Experimentation/resultats_ONLogN_C++.csv", taillesTests, tempsONLogN);
 
-    cout << "Les tests sont terminés. Les résultats sont enregistrés dans 'resultats_ON_C++.csv' et 'resultats_ONLogN_C++.csv'." << endl;
+    cout << "Les tests sont termines. Les resultats sont enregistres dans 'resultats_ON_C++.csv' et 'resultats_ONLogN_C++.csv'." << endl;
 
     return 0;
 }
+

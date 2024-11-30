@@ -171,7 +171,7 @@ void testMergeSortAndGenerateCSV()
     }
 
     // Generate CSV file
-    ecrireDansCSVMerge("merge_sort_results.csv", taillesTests, tempsTri, nbTests);
+    ecrireDansCSVMerge("../Experimentation/merge_sort_results.csv", taillesTests, tempsTri, nbTests);
 }
 
 void TriParFusion()

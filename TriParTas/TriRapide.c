@@ -118,7 +118,7 @@ void testQuickSortAndGenerateCSV()
         free(arr);
     }
 
-    writeCSV("quick_sort_results.csv", sizes, times, numTests);
+    writeCSV("../Experimentation/quick_sort_results.csv", sizes, times, numTests);
 }
 
 int displayMenuTriRapide()

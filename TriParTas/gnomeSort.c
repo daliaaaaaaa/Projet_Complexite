@@ -100,7 +100,7 @@ void testGnomeSortAndGenerateCSV()
         temps[i] = (double)(t2 - t1) / CLOCKS_PER_SEC;
         free(tab);
     }
-    ecrireDansCSVGnome("gnome_sort_results.csv", tailles, temps, nbTests);
+    ecrireDansCSVGnome("../Experimentation/gnome_sort_results.csv", tailles, temps, nbTests);
 }
 
 int displayMenuGnomeSort()

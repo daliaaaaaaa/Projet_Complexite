@@ -141,8 +141,8 @@ void testHeapSortAndGenerateCSV()
         free(tableau);
     }
     // Écrire les résultats dans des fichiers CSV
-    ecrireDansCSV("resultats_Tri_ON.csv", taillesTests, tempsON, nbTests);
-    ecrireDansCSV("resultats_Tri_ONLogN.csv", taillesTests, tempsONLogN, nbTests);
+    ecrireDansCSV("../Experimentation/resultats_Tri_ON.csv", taillesTests, tempsON, nbTests);
+    ecrireDansCSV("../Experimentation/resultats_Tri_ONLogN.csv", taillesTests, tempsONLogN, nbTests);
 }
 void TriParTas_operations()
 {
@@ -240,7 +240,7 @@ void TriParTas_operations()
             break;
 
         default:
-            printf("Choix invalide. Veuillez réessayer.\n");
+            printf("Choix invalide. Veuillez reessayer.\n");
             break;
         }
     } while (choix != 4);
