@@ -53,3 +53,7 @@ dkms.conf
 .vscode/settings.json
 graph_Heap.ipynb
 graph_Heap.ipynb
+bonus/methodestrie.h
+bonus/main.c
+bonus/fusion.h
+bonus/fusion.c

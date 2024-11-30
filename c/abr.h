@@ -24,4 +24,5 @@ void insertion(Noeud** racine, int x);
 Noeud* recherche(Noeud* racine, int x);
 // Fonction menu
 void menu_abr(Noeud** racine);
+void mesurer_complexite(Noeud **racine);
 #endif // ARBRE_BINAIRE_H
