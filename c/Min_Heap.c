@@ -162,7 +162,7 @@ void operationsTASmin()
     while (1)
     {
         printf("\nOperations sur le TAS (Min-Heap):\n");
-        printf("1. Insérer\n");
+        printf("1. Inserer\n");
         printf("2. Supprimer\n");
         printf("3. Rechercher\n");
         printf("4. Afficher le TAS en tant que vecteur\n");
@@ -180,16 +180,16 @@ void operationsTASmin()
             break;
         case 2:
             supprimerMin(arr, &n);
-            printf("Racine supprimée.\n");
+            printf("Racine supprimee.\n");
             break;
         case 3:
-            printf("Entrez la clé à rechercher: ");
+            printf("Entrez la cle a rechercher: ");
             scanf("%d", &cle);
             int index = rechercherElementMin(arr, n, cle);
             if (index != -1)
-                printf("Élément trouvé à l'index %d\n", index);
+                printf("Element trouve a l'index %d\n", index);
             else
-                printf("Élément non trouvé.\n");
+                printf("Element non trouve.\n");
             break;
         case 4:
             afficherTableauMin(arr, n);
@@ -200,7 +200,7 @@ void operationsTASmin()
         case 6:
             return; // quitter
         default:
-            printf("Choix invalide. Réessayez.\n");
+            printf("Choix invalide. Reessayez.\n");
         }
     }
 }
