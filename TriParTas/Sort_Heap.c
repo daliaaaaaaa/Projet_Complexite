@@ -99,6 +99,51 @@ void ecrireDansCSV(const char *nomFichier, const int tailles[], double temps[], 
 
     fclose(fichier);
 }
+
+void testHeapSortAndGenerateCSV()
+{
+    const int taillesTests[] = {1000, 5000, 10000, 50000, 100000};
+    const int nbTests = sizeof(taillesTests) / sizeof(taillesTests[0]);
+
+    double tempsON[nbTests];
+    double tempsONLogN[nbTests];
+
+    for (int t = 0; t < nbTests; t++)
+    {
+        int n = taillesTests[t];
+        int *tableau = (int *)malloc(n * sizeof(int));
+        if (!tableau)
+        {
+            printf("Erreur : Memoire insuffisante pour un tableau de taille %d\n", n);
+            return;
+        }
+
+        genererTableauAleatoire(tableau, n);
+
+        // Mesurer le temps pour O(n)
+        int *copieON = (int *)malloc(n * sizeof(int));
+        memcpy(copieON, tableau, n * sizeof(int));
+        clock_t debut = clock();
+        triParTas(copieON, n, construireTasON);
+        clock_t fin = clock();
+        tempsON[t] = (double)(fin - debut) / CLOCKS_PER_SEC;
+        free(copieON);
+
+        // Mesurer le temps pour O(n log n)
+        int *copieONLogN = (int *)malloc(n * sizeof(int));
+        memcpy(copieONLogN, tableau, n * sizeof(int));
+        debut = clock();
+        triParTas(copieONLogN, n, construireTasNLogN);
+        fin = clock();
+        tempsONLogN[t] = (double)(fin - debut) / CLOCKS_PER_SEC;
+        free(copieONLogN);
+
+        free(tableau);
+    }
+    // Écrire les résultats dans des fichiers CSV
+    ecrireDansCSV("resultats_Tri_ON.csv", taillesTests, tempsON, nbTests);
+    ecrireDansCSV("resultats_Tri_ONLogN.csv", taillesTests, tempsONLogN, nbTests);
+}
 void TriParTas_operations()
 {
     int choix;
@@ -186,51 +231,7 @@ void TriParTas_operations()
 
         case 3:
         {
-            const int taillesTests[] = {1000, 5000, 10000, 50000, 100000};
-            const int nbTests = sizeof(taillesTests) / sizeof(taillesTests[0]);
-
-            double tempsON[nbTests];
-            double tempsONLogN[nbTests];
-
-            for (int t = 0; t < nbTests; t++)
-            {
-                int n = taillesTests[t];
-                int *tableau = (int *)malloc(n * sizeof(int));
-                if (!tableau)
-                {
-                    printf("Erreur : Memoire insuffisante pour un tableau de taille %d\n", n);
-                    return;
-                }
-
-                genererTableauAleatoire(tableau, n);
-
-                // Mesurer le temps pour O(n)
-                int *copieON = (int *)malloc(n * sizeof(int));
-                memcpy(copieON, tableau, n * sizeof(int));
-                clock_t debut = clock();
-                triParTas(copieON, n, construireTasON);
-                clock_t fin = clock();
-                tempsON[t] = (double)(fin - debut) / CLOCKS_PER_SEC;
-                free(copieON);
-
-                // Mesurer le temps pour O(n log n)
-                int *copieONLogN = (int *)malloc(n * sizeof(int));
-                memcpy(copieONLogN, tableau, n * sizeof(int));
-                debut = clock();
-                triParTas(copieONLogN, n, construireTasNLogN);
-                fin = clock();
-                tempsONLogN[t] = (double)(fin - debut) / CLOCKS_PER_SEC;
-                free(copieONLogN);
-
-                free(tableau);
-            }
-
-            // Écrire les résultats dans des fichiers CSV
-            ecrireDansCSV("resultats_Tri_ON.csv", taillesTests, tempsON, nbTests);
-            ecrireDansCSV("resultats_Tri_ONLogN.csv", taillesTests, tempsONLogN, nbTests);
-
-            printf("Les tests sont termines.\n");
-            printf("Resultats enregistres dans 'resultats_Tri_ON.csv' et 'resultats_Tri_ONLogN.csv'.\n");
+            testHeapSortAndGenerateCSV();
             break;
         }
 

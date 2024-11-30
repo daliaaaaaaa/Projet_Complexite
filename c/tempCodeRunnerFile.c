@@ -1,1 +1,0 @@
-gcc main.c abr.c Btree.c listbd.c Max-heap.c Min_heap.c -o main

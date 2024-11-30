@@ -10,5 +10,6 @@ void triParTas(int arr[], int n, void (*constructionTas)(int[], int));
 void genererTableauAleatoire(int arr[], int n);
 void ecrireDansCSV(const char *nomFichier, const int tailles[], double temps[], int nbTests);
 void TriParTas_operations();
+void testHeapSortAndGenerateCSV();
 
 #endif // SORT_HEAP_H

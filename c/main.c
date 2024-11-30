@@ -133,6 +133,11 @@ int main()
                 break;
             case 5:
                 printf("Mesurer complexite\n");
+                testMergeSortAndGenerateCSV();
+                testQuickSortAndGenerateCSV();
+                testGnomeSortAndGenerateCSV();
+                testHeapSortAndGenerateCSV();
+
                 break;
             case 6:
                 printf("Quitter le programme.\n");
