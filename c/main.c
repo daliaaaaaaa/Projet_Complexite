@@ -38,7 +38,7 @@ int main()
         do
         {
             printf("\nSelect a Data Structure:\n");
-            printf("1. Listes doublement chaînées: \n");
+            printf("1. Listes doublement chainees: \n");
             printf("2. Arbre binaire de recherche (BST) : \n");
             printf("3. B-Tree\n");
             printf("4. Tas (Heap)\n");
@@ -50,7 +50,7 @@ int main()
             {
             case 1:
             {
-                printf("Listes doublement chaînées: \n");
+                printf("Listes doublement chainees: \n");
                 bd_operations();
                 break;
             }

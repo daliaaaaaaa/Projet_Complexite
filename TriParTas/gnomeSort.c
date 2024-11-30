@@ -107,7 +107,7 @@ int displayMenuGnomeSort()
 {
     int choice;
     printf("Menu:\n");
-    printf("1. Execute Gnome sort with a specified array size\n");
+    printf("1. executer genome avec une taille specifique n \n");
     printf("2. Test Gnome sort with different array sizes and generate CSV file\n");
     printf("3. Exit\n");
     printf("Enter your choice: ");
