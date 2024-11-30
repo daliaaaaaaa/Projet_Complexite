@@ -14,7 +14,7 @@ void bd_operations();
 void operationsTASmax();
 void operationsTASmin();
 void TriParFusion();
-// void TriParTas_operations();
+void TriParTas_operations();
 
 int main()
 {
@@ -110,7 +110,7 @@ int main()
             {
             case 1:
                 printf("Trie par TAS:\n");
-                // TriParTas_operations();
+                TriParTas_operations();
                 break;
             case 2:
                 printf("Tri Fusion:\n");

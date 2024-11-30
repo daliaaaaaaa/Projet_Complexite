@@ -246,7 +246,7 @@ void bd_operations() {
 }
 
 // Fonction principale
-int main() {
+/*int main() {
     bd_operations();
     return 0;
-}
+}*/
