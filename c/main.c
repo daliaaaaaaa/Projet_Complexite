@@ -121,7 +121,7 @@ int main()
                 break;
             case 2:
                 printf("Tri Fusion:\n");
-                // TriParFusion();
+                TriParFusion();
                 break;
             case 3:
                 printf("Trie Rapide:\n");
@@ -133,6 +133,11 @@ int main()
                 break;
             case 5:
                 printf("Mesurer complexite\n");
+                testMergeSortAndGenerateCSV();
+                testQuickSortAndGenerateCSV();
+                testGnomeSortAndGenerateCSV();
+                testHeapSortAndGenerateCSV();
+
                 break;
             case 6:
                 printf("Quitter le programme.\n");
@@ -141,7 +146,7 @@ int main()
                 printf("Invalid choice.\n");
                 break;
             }
-        } while (choice != 4);
+        } while (choice != 6);
     }
     else
     {

@@ -101,6 +101,7 @@
     "streambuf": "cpp",
     "typeinfo": "cpp",
     "listbd.h": "c",
-    "sort_heap.h": "c"
+    "sort_heap.h": "c",
+    "gnomesort.h": "c"
   }
 }
