@@ -266,6 +266,33 @@ void mesurer_complexite(Noeud **racine) {
     }
 }
 
+// Fonction pour le parcours infixe (In-order)
+void afficher_infixe(Noeud *racine) {
+    if (racine != NULL) {
+        afficher_infixe(racine->fg);   // Parcours du sous-arbre gauche
+        printf("%d ", racine->cle);    // Affichage du nœud
+        afficher_infixe(racine->fd); // Parcours du sous-arbre droit
+    }
+}
+
+// Fonction pour le parcours préfixe (Pre-order)
+void afficher_prefixe(Noeud *racine) {
+    if (racine != NULL) {
+        printf("%d ", racine->cle);    // Affichage du nœud
+        afficher_prefixe(racine->fg); // Parcours du sous-arbre gauche
+        afficher_prefixe(racine->fd);// Parcours du sous-arbre droit
+    }
+}
+
+// Fonction pour le parcours postfixe (Post-order)
+void afficher_postfixe(Noeud *racine) {
+    if (racine != NULL) {
+        afficher_postfixe(racine->fg);   // Parcours du sous-arbre gauche
+        afficher_postfixe(racine->fd); // Parcours du sous-arbre droit
+        printf("%d ", racine->cle);      // Affichage du nœud
+    }
+}
+
 
 
 void menu_abr(Noeud **racine)
@@ -290,6 +317,12 @@ void menu_abr(Noeud **racine)
             scanf("%d", &valeur);
             insertion(racine, valeur);
             printf("Valeur %d insérée dans l'arbre.\n", valeur);
+            printf("--Affichege de l'arbre--\n");
+            printf("Postfixe:\n");
+            afficher_postfixe(*racine);
+            printf("\nPrefixe:\n");
+            afficher_prefixe(*racine);
+            printf("\nInfixe:\n");
             break;
 
         case 2:
@@ -297,6 +330,12 @@ void menu_abr(Noeud **racine)
             scanf("%d", &valeur);
             Suppression(valeur, racine);
             printf("Valeur %d supprimée de l'arbre (si elle était présente).\n", valeur);
+            printf("--Affichege de l'arbre--\n");
+            printf("Postfixe:\n");
+            afficher_postfixe(*racine);
+            printf("\nPrefixe:\n");
+            afficher_prefixe(*racine);
+            printf("\nInfixe:\n");
             break;
 
         case 3:
