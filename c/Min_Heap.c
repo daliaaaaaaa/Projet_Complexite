@@ -175,7 +175,7 @@ void operationsTASmin() {
             afficherTableau(arr, n);
             break;
         case 5:
-            mesurerComplexitemin();
+            mesurerComplexiteMIN();
             break;
         case 6:
             return; // quitter

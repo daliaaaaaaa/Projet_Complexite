@@ -1,4 +1,4 @@
-// Executez gcc main.c abr.c Btree.c listbd.c Max-heap.c Min-heap.c -o main
+// Executez gcc main.c abr.c Btree.c listbd.c Max-heap.c Min_heap.c -o main
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -68,7 +68,7 @@ int main()
                 {
                 case 1:
                     printf("Max-Heap operations:\n");
-                    operrationTASmax();
+                    operationsTASmax();
                     break;
                 case 2:
                     printf("Min-Heap operations:\n");
