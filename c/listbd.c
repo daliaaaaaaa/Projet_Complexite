@@ -284,7 +284,14 @@ void bd_operations()
 }
 
 // Fonction principale
+<<<<<<< HEAD
+/*int main() {
+    bd_operations();
+    return 0;
+}*/
+=======
 /* int main() {
     bd_operations();
     return 0;
 } */
+>>>>>>> 5661776c3cd738f1ca02a665e000d8787c04491e
