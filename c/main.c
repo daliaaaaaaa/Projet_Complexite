@@ -121,7 +121,7 @@ int main()
                 break;
             case 2:
                 printf("Tri Fusion:\n");
-                // TriParFusion();
+                TriParFusion();
                 break;
             case 3:
                 printf("Trie Rapide:\n");
@@ -146,7 +146,7 @@ int main()
                 printf("Invalid choice.\n");
                 break;
             }
-        } while (choice != 4);
+        } while (choice != 6);
     }
     else
     {
