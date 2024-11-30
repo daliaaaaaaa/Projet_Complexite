@@ -25,4 +25,7 @@ Noeud* recherche(Noeud* racine, int x);
 // Fonction menu
 void menu_abr(Noeud** racine);
 void mesurer_complexite(Noeud **racine);
+void afficher_infixe(Noeud *racine);
+void afficher_prefixe(Noeud *racine);
+void afficher_postfixe(Noeud *racine);
 #endif // ARBRE_BINAIRE_H
