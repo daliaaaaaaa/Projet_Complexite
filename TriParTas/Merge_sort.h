@@ -14,5 +14,5 @@ void printArray(int arr[], int size);
 int displayMenu();
 void executeMergeSort(int taille);
 void testMergeSortAndGenerateCSV();
-int TriParFusion();
+void TriParFusion();
 #endif // MERGE_SORT_H

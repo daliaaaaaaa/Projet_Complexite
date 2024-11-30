@@ -174,7 +174,7 @@ void testMergeSortAndGenerateCSV()
     ecrireDansCSVMerge("merge_sort_results.csv", taillesTests, tempsTri, nbTests);
 }
 
-int TriParFusion()
+void TriParFusion()
 {
     int choice;
     while (choice != 3)
@@ -202,5 +202,4 @@ int TriParFusion()
             break;
         }
     }
-    return 0;
 }

@@ -1,4 +1,4 @@
-// Executez gcc main.c abr.c Btree.c listbd.c Max-heap.c Min_heap.c -o main
+// Executez gcc main.c abr.c Btree.c listbd.c Max-heap.c Min_heap.c ../TriParTas/Merge_Sort.c  -o main
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +13,7 @@ void btree_operations();
 void bd_operations();
 void operationsTASmax();
 void operationsTASmin();
-void TriParFusion_operations();
+void TriParFusion();
 // void TriParTas_operations();
 
 int main()
@@ -114,7 +114,7 @@ int main()
                 break;
             case 2:
                 printf("Tri Fusion:\n");
-                TriParFusion_operations();
+                TriParFusion();
                 break;
             case 3:
                 printf("Trie Rapide:\n");
