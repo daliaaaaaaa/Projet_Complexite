@@ -3,14 +3,14 @@
 #include <stdbool.h>
 #include <time.h>
 
-// Définition d'un nœud pour une liste chaînée bidirectionnelle
+// Definition d'un nœud pour une liste chainee bidirectionnelle
 typedef struct Node {
     int data;
     struct Node *prev;
     struct Node *next;
 } Node;
 
-// Fonction pour insérer un élément dans la liste (triée)
+// Fonction pour inserer un element dans la liste (triee)
 void insertbd(Node **head, int value) {
     Node *new_node = (Node *)malloc(sizeof(Node));
     new_node->data = value;
@@ -71,7 +71,7 @@ void delete_nodebd(Node **head, int key) {
     free(current);
 }
 
-// Fonction pour rechercher un élément dans la liste
+// Fonction pour rechercher un element dans la liste
 bool searchbd(Node *head, int key) {
     Node *current = head;
 
@@ -104,7 +104,7 @@ void print_bd(Node *head) {
 
 // Fonction pour exporter la liste dans un fichier CSV
 void export_to_csv(Node *head, const char *filename) {
-    FILE *file = fopen("../Experimentation/complexite_temps_bd.csv", "w");
+    FILE *file = fopen(filename, "w");
     if (file == NULL) {
         printf("Erreur lors de l'ouverture du fichier %s.\n", filename);
         return;
@@ -120,12 +120,12 @@ void export_to_csv(Node *head, const char *filename) {
     }
 
     fclose(file);
-    printf("Données exportées avec succès dans le fichier %s.\n", filename);
+    printf("Donnees exportees avec succès dans le fichier %s.\n", filename);
 }
 
 // Fonction pour mesurer les performances et exporter dans un fichier CSV
 void measure_and_export_performance(const char *filename) {
-    const int sizes[] = {100, 1000, 10000}; // Tailles pour l'expérimentation
+    const int sizes[] = {100,500,777, 1000,5000, 10000}; // Tailles pour l'experimentation
     const int num_sizes = sizeof(sizes) / sizeof(sizes[0]);
     FILE *file = fopen(filename, "w+");
     if (file == NULL) {
@@ -164,15 +164,15 @@ void measure_and_export_performance(const char *filename) {
         double deletion_time = ((double)(end - start)) / CLOCKS_PER_SEC * 1000;
 
         fprintf(file, "%d,%.2f,%.2f,%.2f\n", size, insertion_time, search_time, deletion_time);
-        printf("Données pour taille %d exportées : %.2f ms insertion, %.2f ms recherche, %.2f ms suppression.\n",
+        printf("Donnees pour taille %d exportees : %.2f ms insertion, %.2f ms recherche, %.2f ms suppression.\n",
                size, insertion_time, search_time, deletion_time);
     }
 
     fclose(file);
-    printf("Performances exportées avec succès dans le fichier %s.\n", filename);
+    printf("Performances exportees avec succès dans le fichier %s.\n", filename);
 }
 
-// Fonction principale pour gérer les opérations sur la liste chaînée bidirectionnelle
+// Fonction principale pour gerer les operations sur la liste chainee bidirectionnelle
 void bd_operations() {
     int choice = 0, key;
     const int tree_size = 30;
@@ -189,8 +189,8 @@ void bd_operations() {
     print_bd(head);
 
     while (choice != 7) {
-        printf("\nOpérations sur la Liste Chaînée Bidirectionnelle :\n");
-        printf("1. Insérer\n");
+        printf("\nOperations sur la Liste Chainee Bidirectionnelle :\n");
+        printf("1. Inserer\n");
         printf("2. Supprimer\n");
         printf("3. Rechercher\n");
         printf("4. Afficher la Liste\n");
@@ -202,24 +202,24 @@ void bd_operations() {
 
         switch (choice) {
         case 1:
-            printf("Entrez la clé à insérer : ");
+            printf("Entrez la cle à inserer : ");
             scanf("%d", &key);
             insertbd(&head, key);
             break;
 
         case 2:
-            printf("Entrez la clé à supprimer : ");
+            printf("Entrez la cle à supprimer : ");
             scanf("%d", &key);
             delete_nodebd(&head, key);
             break;
 
         case 3:
-            printf("Entrez la clé à rechercher : ");
+            printf("Entrez la cle à rechercher : ");
             scanf("%d", &key);
             if (searchbd(head, key)) {
-                printf("Clé trouvée !\n");
+                printf("Cle trouvee !\n");
             } else {
-                printf("Clé non trouvée.\n");
+                printf("Cle non trouvee.\n");
             }
             break;
 
@@ -228,11 +228,11 @@ void bd_operations() {
             break;
 
         case 5:
-            export_to_csv(head, "../Experimentation/complexite_temps_bd.csv");
+            export_to_csv(head, "../Experimentation/complexite_temps_bd_exp.csv");
             break;
 
         case 6:
-            measure_and_export_performance("performance.csv");
+            measure_and_export_performance("../Experimentation/complexite_temps_bd_exp.csv");
             break;
 
         case 7:
@@ -240,13 +240,13 @@ void bd_operations() {
             break;
 
         default:
-            printf("Choix invalide. Veuillez réessayer.\n");
+            printf("Choix invalide. Veuillez reessayer.\n");
         }
     }
 }
 
 // Fonction principale
-int main() {
-    bd_operations();
-    return 0;
-}
+// int main() {
+//     bd_operations();
+//     return 0;
+// }

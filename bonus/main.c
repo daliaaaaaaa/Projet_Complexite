@@ -14,7 +14,7 @@ int main()
     printf("Choisissez si vous voulez un tableau dans :\n");
     printf("1. Tri de gnome (tapez 1)\n");
     printf("2. Tri rapide (tapez 2)\n");
-    printf("3. Tri par fusion (tapez 3)\n");
+    // printf("3. Tri par fusion (tapez 3)\n");
 
     if (scanf("%d", &choix) != 1)
     {
@@ -37,12 +37,12 @@ int main()
         rapide();
         break;
     }
-    case 3:
-    {
-        printf("Tri Par Fusion : \n\n");
-        TriParFusion();
-        break;
-    }
+    // case 3:
+    // {
+        // printf("Tri Par Fusion : \n\n");
+        // TriParFusion();
+        // break;
+    // }
     }
     return 0;
 }

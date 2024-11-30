@@ -13,7 +13,7 @@ void btree_operations();
 void bd_operations();
 void operationsTASmax();
 void operationsTASmin();
-void TriParFusion();
+// void TriParFusion();
 // void TriParTas_operations();
 
 int main()
@@ -114,7 +114,7 @@ int main()
                 break;
             case 2:
                 printf("Tri Fusion:\n");
-                TriParFusion();
+                // TriParFusion();
                 break;
             case 3:
                 printf("Trie Rapide:\n");

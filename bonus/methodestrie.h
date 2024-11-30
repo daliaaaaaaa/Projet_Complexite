@@ -3,7 +3,7 @@
 
 #include "gnom.h"
 #include "rapide.h"
-#include "fusion.h"
+// #include "fusion.h"
 // #include"triabulle.h"
 // #include"triabulleOpt.h"
 #endif // METHODESTRIE_H_INCLUDED
